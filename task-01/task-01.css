@@ -1,0 +1,22 @@
+#chat-content{
+    width: 32%;
+    margin-left: 64%;
+    min-height: 45px;
+    /*margin-top: 390px;*/
+}
+.chat-content button{
+    position: absolute;
+    height: 96px;
+    padding: 0 10px;
+    margin: 0 5px;
+}
+.messages-content{
+    min-height: 350px;
+}
+#roll-up{
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    padding: 0;
+    margin-left: 30%;
+}
