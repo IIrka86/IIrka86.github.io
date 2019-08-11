@@ -1,7 +1,12 @@
+
+var tsChat = document.createElement('div');
+tsChat.id = 'ts-chat';
+document.body.appendChild(tsChat);
+
 var fieldset = document.createElement('fieldset');
 fieldset.id = 'chat-content';
 fieldset.innerHTML = '<legend>Чат</legend>';
-document.body.appendChild(fieldset);
+tsChat.appendChild(fieldset);
 
 var rollUpBtn = document.createElement('button');
 rollUpBtn.id = 'roll-up';
@@ -17,14 +22,19 @@ messages.className = 'messages-content';
 content.appendChild(messages);
 
 var form = document.createElement('div');
-form.innerHTML = '<textarea name="message" id="message-text" cols="40" rows="6"></textarea>' +
+form.innerHTML = '<textarea name="message" id="message-text" cols="40" rows="3"></textarea>' +
                  '<button id="send-btn">Отправить</button>';
 content.appendChild(form);
 
 function getFieldsetMarginTop() {
-    return window.innerHeight - fieldset.offsetHeight -15;
+    return window.innerHeight - tsChat.offsetHeight -30;
 }
-fieldset.setAttribute('style', 'margin-top:' + getFieldsetMarginTop() + 'px;');
+function getFieldsetMarginLeft() {
+    return window.innerWidth - tsChat.offsetWidth -20;
+}
+var chat = document.getElementById('ts-chat');
+chat.style.top = getFieldsetMarginTop() + 'px';
+chat.style.left = getFieldsetMarginLeft() + 'px';
 
 rollUpBtn.onclick = function () {
     if(content.getAttribute('hidden') === ''){
@@ -34,7 +44,9 @@ rollUpBtn.onclick = function () {
         content.setAttribute('hidden','');
         rollUpBtn.innerHTML = '[ ]';
     }
-    fieldset.setAttribute('style', 'margin-top:' + getFieldsetMarginTop() + 'px;');
+    chat.style.top = getFieldsetMarginTop() + 'px';
+    chat.style.left = getFieldsetMarginLeft() + 'px';
+    //tsChat.setAttribute('style', 'margin-top:' + getFieldsetMarginTop() + 'px;');
 };
 
 var sendButton = document.getElementById('send-btn');
@@ -53,5 +65,29 @@ function addMessage(message) {
     var date = new Date();
     messageString.innerHTML = '' + date.getHours() + ':' + date.getMinutes() + message;
     messages.appendChild(messageString);
-    fieldset.setAttribute('style', 'margin-top:' + getFieldsetMarginTop() + 'px;');
+    //tsChat.setAttribute('style', 'top:' + getFieldsetMarginTop() + 'px;')
+    //fieldset.setAttribute('style', 'margin-top:' + getFieldsetMarginTop() + 'px;');
 }
+
+tsChat.addEventListener('mousedown', function (e) {
+//tsChat.onmousedown = function (e) {
+    var chatElement = document.getElementById('ts-chat');
+
+    var left = parseInt( window.getComputedStyle(chatElement).getPropertyValue("left") );
+    var top = parseInt( window.getComputedStyle(chatElement).getPropertyValue("top") );
+    var mouseX = e.clientX;
+    var mouseY = e.clientY;
+
+    document.onmousemove = function (e) {
+        var dx = mouseX - e.clientX;
+        var dy = mouseY - e.clientY;
+
+        chatElement.style.left = left - dx + "px";
+        chatElement.style.top = top - dy + "px";
+    };
+});
+
+tsChat.addEventListener('mouseup', function () {
+//tsChat.onmouseup = function () {
+    document.onmousemove = null;
+});
