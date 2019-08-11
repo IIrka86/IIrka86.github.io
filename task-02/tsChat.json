@@ -1,0 +1,12 @@
+{
+  "title": "xxx",
+  "botName": "yyy",
+  "chatUrl": "http://...",
+  "cssClass": "ts-chat",
+  "position": "right",
+  "allowMinimize": "false",
+  "allowDrug": "true",
+  "showDateTime": "false",
+  "requireName": "false",
+  "request": "fetch"
+}
